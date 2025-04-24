@@ -1,6 +1,9 @@
 package net.BaldGamingGoose.CarrierPigeonMod;
 
 import com.mojang.logging.LogUtils;
+import net.BaldGamingGoose.CarrierPigeonMod.entity.ModEntities;
+import net.BaldGamingGoose.CarrierPigeonMod.item.ModItem;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -27,13 +30,18 @@ public class CarrierPigeonMod
 
     public CarrierPigeonMod()
     {
+
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
 
+        ModEntities.register(modEventBus);
+        ModItem.register(modEventBus);
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
@@ -49,13 +57,16 @@ public class CarrierPigeonMod
 
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
+        if(event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
+            event.accept(ModItem.CARRIER_PIGEON_EGG);
+        }
 
 
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event) {
+    public void onServerStarting(ServerStartingEvent event){
 
 
     }
