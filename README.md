@@ -1,2 +1,2 @@
 # Carrier-Pigeon-Mod
-Mod
+Minecraft Carrier Pigeon Mod
